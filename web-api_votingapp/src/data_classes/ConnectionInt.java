@@ -2,7 +2,6 @@ package data_classes;
 
 import javax.jws.*;
 import javax.jws.soap.SOAPBinding;
-import javax.xml.ws.Endpoint;
 
 @WebService(name="ConnectionService", endpointInterface="data_classes.Connection")
 @SOAPBinding(style= SOAPBinding.Style.RPC)

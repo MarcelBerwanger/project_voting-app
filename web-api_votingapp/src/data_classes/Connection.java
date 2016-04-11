@@ -30,9 +30,6 @@ public class Connection implements ConnectionInt{
 		weburl=gweburl;
 	}
 	
-	//Instantzen der beiden Klassen die für die Datenverabrbeitung zuständig sind
-	private Database databaseConn;
-	private Parsing parsingData;
 	private String weburl;
 	private Endpoint endpoint;
 	

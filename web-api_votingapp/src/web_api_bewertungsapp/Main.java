@@ -1,14 +1,9 @@
 package web_api_bewertungsapp;
 
 import java.net.URL;
-
 import data_classes.Connection;
 import data_classes.ConnectionInt;
-
-import javax.jws.*;
-import javax.jws.soap.SOAPBinding;
 import javax.xml.namespace.QName;
-import javax.xml.ws.Endpoint;
 import javax.xml.ws.Service;
 import javax.xml.ws.WebServiceRef;
 
