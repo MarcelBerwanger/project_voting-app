@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Voting_App</string>
+
+    <string-array name="kategories">
+        <item>gut bürgerlich</item>
+        <item>asiatisch</item>
+        <item>italienisch</item>
+        <item>griechisch</item>
+        <item>fast food</item>
+        <item>burger</item>
+    </string-array>
+</resources>

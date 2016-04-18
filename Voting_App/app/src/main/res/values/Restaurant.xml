@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="restaurants">Restaurants</string>
+
+    <string-array name="restaurant">
+        <item>Restaurant1
+            <subitem>subitem1</subitem>
+        </item>
+        <item>Restaurant2
+            <subitem>subitem2</subitem>
+        </item>
+        <item>Restaurant3
+            <subitem>subitem3</subitem>
+        </item>
+        <item>Restaurant4
+            <subitem>subitem4</subitem>
+        </item>
+    </string-array>
+
+</resources>
