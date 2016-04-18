@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Projekt</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="UserName">Projekt</string>
+    <string name="Überschrift">Benutzer</string>
+    <string name="Bewertungsbutton">Bewerten</string>
+    <string name="Überschrift1">Restaurantes</string>
+
+    <string name="action_settings">Settings</string>
+</resources>
