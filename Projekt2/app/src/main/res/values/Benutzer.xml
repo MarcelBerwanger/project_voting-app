@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="Benutzer">
+
+        <item>
+            Peter
+            <subitem>
+                1ahw
+            </subitem>
+        </item>
+
+         <item>
+            Klaus
+            <subitem>
+                3ahw
+            </subitem>
+        </item>
+
+         <item>
+            Sepp
+            <subitem>
+                1ahw
+            </subitem>
+        </item>
+
+         <item>
+           Max
+            <subitem>
+                4AHW
+            </subitem>
+        </item>
+
+        <item>
+            Klaus
+            <subitem>
+                3AHW
+            </subitem>
+        </item>
+        <item>
+            Peter
+            <subitem>
+                1ahw
+            </subitem>
+        </item>
+
+         <item>
+            Klaus
+            <subitem>
+                3ahw
+            </subitem>
+        </item>
+
+         <item>
+            Sepp
+            <subitem>
+                1ahw
+            </subitem>
+        </item>
+
+         <item>
+           Max
+            <subitem>
+                4AHW
+            </subitem>
+        </item>
+
+        <item>
+            Klaus
+            <subitem>
+                3AHW
+            </subitem>
+        </item>
+        <item>
+            Peter
+            <subitem>
+                1ahw
+            </subitem>
+        </item>
+
+         <item>
+            Klaus
+            <subitem>
+                3ahw
+            </subitem>
+        </item>
+
+         <item>
+            Sepp
+            <subitem>
+                1ahw
+            </subitem>
+        </item>
+
+         <item>
+           Max
+            <subitem>
+                4AHW
+            </subitem>
+        </item>
+
+        <item>
+            Klaus
+            <subitem>
+                3AHW
+            </subitem>
+        </item>
+
+
+
+
+
+    </string-array>
+
+
+
+
+</resources>
