@@ -1,0 +1,40 @@
+Activity: Sign In
+Daten:
+- PID
+- Benutzername
+- Klasse
+- Passwort
+- Rolle
+
+Activity: Voting
+Daten:
+- PID
+- RID
+
+Activity: Bewertung:
+Daten:
+- PID
+- RID
+- Sterne
+- Beschreibung
+
+Activity: - (Restaurant anlegen)
+Daten:
+- RID
+- Name
+- Adresse
+- Kategorie
+- KID
+- Postleitzahl
+- Straﬂe
+- Ort
+
+Activity: - (User zu Moderator machen)
+- Rolle
+
+Activity: - (Kategorien festlegen)
+- KID
+- Bezeichnung
+
+Activity: - (Rollen festlegen)
+- Rolle
