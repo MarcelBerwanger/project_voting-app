@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="Voting">
+        <item>
+            6.5.2016
+            <subitem>
+                Gewinner Breakfast Club
+            </subitem>
+        </item>
+
+        <item>
+            5.5.2016
+            <subitem>
+                Gewinner Indisches Restaurant Rama
+            </subitem>
+        </item>
+
+        <item>
+            4.5.2016
+            <subitem>
+                Gewinner die Wilderin
+            </subitem>
+        </item>
+
+        <item>
+            3.5.2016
+            <subitem>
+                Gewinner Weisses Rössl Restaurant
+            </subitem>
+        </item>
+
+        <item>
+            2.5.2016
+            <subitem>
+                Gewinner Goldener Adler
+            </subitem>
+        </item>
+
+        <item>
+            1.5.2016
+            <subitem>
+                Gewinner Ludwig Das Burger Restaurant
+            </subitem>
+        </item>
+
+        <item>
+            30.4.2016
+            <subitem>
+                Gewinner Due Sicilie
+            </subitem>
+        </item>
+
+        <item>
+            29.4.2016
+            <subitem>
+                Gewinner Bistro Gourmand
+            </subitem>
+        </item>
+
+        <item>
+            28.4.2016
+            <subitem>
+                Gewinner Ristorante und Pizzeria Da Rocco
+            </subitem>
+        </item>
+
+        <item>
+            27.4.2016
+            <subitem>
+                Gewinner Stiftskeller
+            </subitem>
+        </item>
+
+        <item>
+            26.4.2016
+             <subitem>
+                Gewinner Buzihütte
+            </subitem>
+        </item>
+    </string-array>
+</resources>
