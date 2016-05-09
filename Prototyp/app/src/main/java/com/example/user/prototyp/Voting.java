@@ -58,7 +58,7 @@ public class Voting extends AppCompatActivity implements AdapterView.OnItemClick
 
         //Daten versenden
         Intent intent = new Intent();
-        PendingIntent pendingIntent = PendingIntent.getActivity(Voting.this,0,intent,0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(Voting.this, 0, intent, 0);
         Notification notification = new Notification.Builder(Voting.this)
                 .setTicker("Die APP")
                 .setContentTitle("Voting info")
@@ -71,6 +71,7 @@ public class Voting extends AppCompatActivity implements AdapterView.OnItemClick
         alreadyVoted = true;
         voteButton.setClickable(false);
         voteButton.setEnabled(false);
-
+        Intent i = new Intent(Voting.this,HomeScreen.class);
+        startActivity(i);
     }
 }
