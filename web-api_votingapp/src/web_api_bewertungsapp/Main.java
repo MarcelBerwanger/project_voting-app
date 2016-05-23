@@ -22,13 +22,13 @@ public class Main {
 		//Connection testen
 		//Für eine Verbindung braucht es eine URL
 		try{
-			url = new URL("http://192.168.137.1:8080/services?wsdl");
+			url = new URL("http://localhost:8080/services?wsdl");
 		}catch(Exception e){System.out.println("Fehler mit der URL");}
 		
 		//Der QName wird zum erstellen eines Services benötigt
 		qname = new QName("http://data_classes/","ConnectionService");
 		try{
-			//connTest();
+			connTest();
 		}catch(Exception e){
 			e.printStackTrace();
 			con.stopService();

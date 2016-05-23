@@ -25,7 +25,7 @@ public class Connection implements ConnectionInt{
 	 * übergeben, wird sie auf "http://localhost:8080/services"
 	 * festgelegt.
 	 */
-	public Connection(){this("http://192.168.137.1:8080/services");}
+	public Connection(){this("http://localhost:8080/services");}
 	public Connection(String gweburl){
 		weburl=gweburl;
 	}
