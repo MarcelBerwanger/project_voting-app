@@ -42,6 +42,17 @@ CREATE TABLE Klasse(
 Name TEXT NOT NULL
 );
 
+INSERT INTO Klasse (Name) VALUES ('1AHW');
+INSERT INTO Klasse (Name) VALUES ('1BHW');
+INSERT INTO Klasse (Name) VALUES ('2AHW');
+INSERT INTO Klasse (Name) VALUES ('2BHW');
+INSERT INTO Klasse (Name) VALUES ('3AHW');
+INSERT INTO Klasse (Name) VALUES ('3BHW');
+INSERT INTO Klasse (Name) VALUES ('4AHW');
+INSERT INTO Klasse (Name) VALUES ('4BHW');
+INSERT INTO Klasse (Name) VALUES ('5AHW');
+INSERT INTO Klasse (Name) VALUES ('5BHW');
+
 CREATE TABLE Voting(
 PID INT NOT NULL,
 RID Integer NOT NULL,
@@ -60,13 +71,20 @@ CREATE TABLE Rolle(
 Rolle CHAR NOT NULL DEFAULT ('U'),
 );
 
-INSERT INTO ROLLE (Rolle) VALUES ('U');
-INSERT INTO ROLLE (Rolle) VALUES ('M');
+INSERT INTO Rolle (Rolle) VALUES ('U');
+INSERT INTO Rolle (Rolle) VALUES ('M');
 
 CREATE TABLE Kategorie(
 KID INT PRIMARY KEY NOT NULL,
 Bezeichnung TEXT NOT NULL
 );
+
+INSERT INTO Kategorie (KID, Bezeichnung) VALUES (1,'gut bürgerlich');
+INSERT INTO Kategorie (KID, Bezeichnung) VALUES (2,'asiatisch');
+INSERT INTO Kategorie (KID, Bezeichnung) VALUES (3,'italienisch');
+INSERT INTO Kategorie (KID, Bezeichnung) VALUES (4,'griechisch');
+INSERT INTO Kategorie (KID, Bezeichnung) VALUES (5,'fast food');
+
 
 
 

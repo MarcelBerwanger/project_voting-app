@@ -38,3 +38,10 @@ Activity: - (Kategorien festlegen)
 
 Activity: - (Rollen festlegen)
 - Rolle
+
+Activity: - (Freund anlegen)
+- PID
+- FID
+
+Activity: - (Klassen anlegen)
+- Name 
