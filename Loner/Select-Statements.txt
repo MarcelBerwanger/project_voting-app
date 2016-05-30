@@ -1,0 +1,34 @@
+/*Activity: Sign In*/
+SELECT PID, Passwort 
+FROM Person; 
+WHERE PID = x 
+AND WHERE Passwort = y;
+/*Activity: Voting*/
+SELECT RID, Name, COUNT(PID)
+FROM Voting JOIN Restaurant USING RID
+GROUP BY RID;
+/*Activity: Bewertung*/
+SELECT PID, RID, Sterne, Beschreibung 
+FROM Bewertung
+GROUP BY RID; 
+/*Activity: Restaurant anlegen*/
+INSERT INTO Restaurant(RID, Name, Adresse, Kategorie, KID, Postleizahl, Straﬂe, Ort) 
+VALUES(null,"","","",null,null,"","");
+/*Activity: User zu Moderator machen*/
+UPDATE Person 
+SET ROLLE = m
+WHERE PID = ?;
+/*Activity: Kategorien feslegen*/
+UPDATE Restaurant
+SET Kategorie = wert
+WHERE RID = ?;
+/*Activity: Rollen festlegen*/
+UPDATE PERSON
+SET Rolle = wert
+WHere PID = ?;
+/*Activity: Freund anlegen*/
+INSERT INTO Freund(PID, FID) 
+VALUES(null,null);
+/*Activity: Klassen anlegen*/
+INSERT INTO Klasse(Name)
+VALUES("");
