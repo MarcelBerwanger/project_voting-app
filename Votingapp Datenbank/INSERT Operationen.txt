@@ -1,33 +1,41 @@
 Activity: Sign In
 Daten:
 - PID
-- Benutzername
+- Email
 - Klasse
 - Passwort
-- Rolle
+(Neuen Benutzer anlegen und in die Tabelle eintragen)
+
+Activity: Log In
+Daten:
+- PID
+- Passwort
+(Schauen ob Benutzer vorhanden - true oder false Wert als Rückgabe der API)
 
 Activity: Voting
+*Vote geben
 Daten:
 - PID
 - RID
+*Restaurants auflisten
+Daten:
+- Name (von Restaurant)
+- Kategorie
+(Einmal das Vote speicher und einmal alle vorhandenen Restaurants angeben)
 
 Activity: Bewertung:
 Daten:
 - PID
 - RID
 - Sterne
-- Beschreibung
+- Bewertung
+(Eine Bewertung wird abgegeben + überprüfen ob eine Bewertung schon vorhanden mit bool)
 
 Activity: - (Restaurant anlegen)
 Daten:
-- RID
 - Name
 - Adresse
-- Kategorie
-- KID
-- Postleitzahl
-- Straße
-- Ort
+- Kategorie (Auswählbar)
 
 Activity: - (User zu Moderator machen)
 - Rolle

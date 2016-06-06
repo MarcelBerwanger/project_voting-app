@@ -1,6 +1,8 @@
 //Anleitung/ Quelle: http://openbook.rheinwerk-verlag.de/java7/1507_13_003.html#top
 package data_classes;
 
+import java.util.ArrayList;
+
 import javax.jws.*;
 import javax.jws.soap.SOAPBinding;
 import javax.xml.ws.Endpoint;
@@ -49,17 +51,17 @@ public class Connection implements ConnectionInt{
 	//Nicht Vergessen die Parameter der Methode mit @WebParam zu versehen & name setzen!!
 	//(operationName="requestData")
 	@Override
-	public String requestData()
+	public ArrayList<String> requestData(String statement)
 	{
 		//Aufruf der DB Klasse
-		return "Hello I'm the webservice 4AHWIWebServices";
+		return null;
 	}
 	
 	//Es Fehlen noch die Parameter (XML datei und was er überschreiben will)
 	//Nicht Vergessen die Parameter der Methode mit @WebParam zu versehen & name setzen!!
 	@Override
-	public void writeData()
+	public boolean writeData(String statement)
 	{
-		
+		return false;
 	}
 }
