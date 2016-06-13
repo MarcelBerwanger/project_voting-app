@@ -4,7 +4,8 @@ CREATE DATABASE IF NOT EXISTS votingapp;
 USE votingapp;
 
 CREATE TABLE Rolle(
-Rolle CHAR NOT NULL DEFAULT 'U'
+Rolle CHAR NOT NULL DEFAULT 'U',
+KEY(Rolle)
 );
 
 INSERT INTO Rolle (Rolle) VALUES ('U');
