@@ -1,11 +1,16 @@
 //Anleitung/ Quelle: http://openbook.rheinwerk-verlag.de/java7/1507_13_003.html#top
 package data_classes;
 
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.jws.*;
 import javax.jws.soap.SOAPBinding;
 import javax.xml.ws.Endpoint;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 
 /*
  * Jede Klasse die einen WebService darstellt muss die folgenden 2
@@ -30,10 +35,35 @@ public class Connection implements ConnectionInt{
 	public Connection(){this("http://localhost:8080/services");}
 	public Connection(String gweburl){
 		weburl=gweburl;
+		
 	}
 	
 	private String weburl;
 	private Endpoint endpoint;
+	
+	//Datenbank-Verbindungsvariablen
+	private String hostname = "localhost";
+	private String port = "3306";
+	private String dbname = "uni"; //Name der Datenbank!
+	private Connection conState = null; //Wird in databaseConnection initialisiert
+	
+	public void databaseConnection(){
+		String url = "jdbc:mysql://"+hostname+":"+port+"/"+dbname ;
+		try {
+			String user = "root";
+			String password = "";
+			try 
+			{
+				Class.forName( "com.mysql.jdbc.Driver" );
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+			conState = (Connection) DriverManager.getConnection(url, user, password);
+			System.out.println("Connected");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	//Der WebService muss veröffentlich werden, dies Geschieht in dieser Methode
 	//die URL des Webservices steht in dem feld weburl
@@ -62,6 +92,7 @@ public class Connection implements ConnectionInt{
 	@Override
 	public boolean writeData(String statement)
 	{
+		
 		return false;
 	}
 }

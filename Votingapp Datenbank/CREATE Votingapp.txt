@@ -1,18 +1,47 @@
-CREATE DATABASE IF NOT EXISTS Votingapp;
+DROP DATABASE IF EXISTS votingapp;
+
+CREATE DATABASE IF NOT EXISTS votingapp;
+USE votingapp;
+
+CREATE TABLE Rolle(
+Rolle CHAR NOT NULL DEFAULT 'U'
+);
+
+INSERT INTO Rolle (Rolle) VALUES ('U');
+INSERT INTO Rolle (Rolle) VALUES ('M');
+
+CREATE TABLE Kategorie(
+KID INT PRIMARY KEY NOT NULL,
+Bezeichnung TEXT NOT NULL
+);
+
+INSERT INTO Kategorie (KID, Bezeichnung) VALUES (1,'gut bürgerlich');
+INSERT INTO Kategorie (KID, Bezeichnung) VALUES (2,'asiatisch');
+INSERT INTO Kategorie (KID, Bezeichnung) VALUES (3,'italienisch');
+INSERT INTO Kategorie (KID, Bezeichnung) VALUES (4,'griechisch');
+INSERT INTO Kategorie (KID, Bezeichnung) VALUES (5,'fast food');
 
 CREATE TABLE Person(
 PID INT PRIMARY KEY NOT NULL,
 Benutzername TEXT NOT NULL,
 Klasse TEXT NOT NULL,
 Passwort TEXT NOT NULL,
-Rolle CHAR NOT NULL DEFAULT ('U'),
-FOREIGN KEY (Rolle) REFERNECES Rolle (Rolle)
+Rolle CHAR NOT NULL DEFAULT 'U',
+FOREIGN KEY (Rolle) REFERENCES Rolle (Rolle)
 );
 
 CREATE TABLE Freund(
 PID INT NOT NULL,
 FID INT PRIMARY KEY NOT NULL,
 FOREIGN KEY(PID) REFERENCES Person(PID)
+);
+
+CREATE TABLE Restaurant(
+RID INT PRIMARY KEY NOT NULL,
+KID INT NOT NULL, 
+Name TEXT NOT NULL,
+Kategorie TEXT NOT NULL,
+FOREIGN KEY (KID) REFERENCES Kategorie(KID)
 );
 
 CREATE TABLE Bewertung(
@@ -24,18 +53,10 @@ FOREIGN KEY(PID) REFERENCES Person(PID),
 FOREIGN KEY(RID) REFERENCES Restaurant(RID)
 );
 
-CREATE TABLE Restaurant(
-RID INT PRIMARY KEY NOT NULL,
-KID INT NOT NULL, 
-Name TEXT NOT NULL,
-Kategorie TEXT NOT NULL,
-FOREIGN KEY (KID) REFERENCES Kategorie (KID)
-);
-
 CREATE TABLE Freund(
 PID INT NOT NULL,
 FID INT PRIMARY KEY NOT NULL,
-FOREIGN KEY(PID) REFERNECES Person(PID)
+FOREIGN KEY(PID) REFERENCES Person(PID)
 );
 
 CREATE TABLE Klasse(
@@ -63,29 +84,5 @@ CREATE TABLE Adresse(
 RID INT NOT NULL,
 Postleitzahl TEXT NOT NULL,
 Straße TEXT NOT NULL,
-Ort TEXT NOT NULL,
-FOREIGN KEY (PID) REFERENCES Person (PID)
+Ort TEXT NOT NULL
 );
-
-CREATE TABLE Rolle(
-Rolle CHAR NOT NULL DEFAULT ('U'),
-);
-
-INSERT INTO Rolle (Rolle) VALUES ('U');
-INSERT INTO Rolle (Rolle) VALUES ('M');
-
-CREATE TABLE Kategorie(
-KID INT PRIMARY KEY NOT NULL,
-Bezeichnung TEXT NOT NULL
-);
-
-INSERT INTO Kategorie (KID, Bezeichnung) VALUES (1,'gut bürgerlich');
-INSERT INTO Kategorie (KID, Bezeichnung) VALUES (2,'asiatisch');
-INSERT INTO Kategorie (KID, Bezeichnung) VALUES (3,'italienisch');
-INSERT INTO Kategorie (KID, Bezeichnung) VALUES (4,'griechisch');
-INSERT INTO Kategorie (KID, Bezeichnung) VALUES (5,'fast food');
-
-
-
-
-
