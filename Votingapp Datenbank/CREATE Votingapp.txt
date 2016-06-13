@@ -13,7 +13,8 @@ INSERT INTO Rolle (Rolle) VALUES ('M');
 
 CREATE TABLE Kategorie(
 KID INT PRIMARY KEY NOT NULL,
-Bezeichnung TEXT NOT NULL
+Bezeichnung TEXT NOT NULL,
+KEY(KID)
 );
 
 INSERT INTO Kategorie (KID, Bezeichnung) VALUES (1,'gut bürgerlich');
@@ -28,7 +29,8 @@ Benutzername TEXT NOT NULL,
 Klasse TEXT NOT NULL,
 Passwort TEXT NOT NULL,
 Rolle CHAR NOT NULL,
-FOREIGN KEY (Rolle) REFERENCES Rolle (Rolle)
+FOREIGN KEY (Rolle) REFERENCES Rolle (Rolle),
+KEY(PID)
 );
 
 CREATE TABLE Freund(
@@ -42,7 +44,8 @@ RID INT PRIMARY KEY NOT NULL,
 KID INT NOT NULL, 
 Name TEXT NOT NULL,
 Kategorie TEXT NOT NULL,
-FOREIGN KEY (KID) REFERENCES Kategorie(KID)
+FOREIGN KEY (KID) REFERENCES Kategorie(KID),
+KEY(RID)
 );
 
 CREATE TABLE Bewertung(
