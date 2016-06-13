@@ -15,7 +15,7 @@ KID INT PRIMARY KEY NOT NULL,
 Bezeichnung TEXT NOT NULL
 );
 
-INSERT INTO Kategorie (KID, Bezeichnung) VALUES (1,'gut b¸rgerlich');
+INSERT INTO Kategorie (KID, Bezeichnung) VALUES (1,'gut b√ºrgerlich');
 INSERT INTO Kategorie (KID, Bezeichnung) VALUES (2,'asiatisch');
 INSERT INTO Kategorie (KID, Bezeichnung) VALUES (3,'italienisch');
 INSERT INTO Kategorie (KID, Bezeichnung) VALUES (4,'griechisch');
@@ -26,7 +26,7 @@ PID INT PRIMARY KEY NOT NULL,
 Benutzername TEXT NOT NULL,
 Klasse TEXT NOT NULL,
 Passwort TEXT NOT NULL,
-Rolle CHAR NOT NULL DEFAULT 'U',
+Rolle CHAR NOT NULL,
 FOREIGN KEY (Rolle) REFERENCES Rolle (Rolle)
 );
 
@@ -76,13 +76,14 @@ INSERT INTO Klasse (Name) VALUES ('5BHW');
 
 CREATE TABLE Voting(
 PID INT NOT NULL,
-RID Integer NOT NULL,
-FOREIGN KEY(PID) REFERENCES Person(PID)
+RID INT NOT NULL,
+FOREIGN KEY(PID) REFERENCES Person(PID),
+FOREIGN KEY(RID) REFERENCES Restaurant(RID)
 );
 
 CREATE TABLE Adresse(
 RID INT NOT NULL,
 Postleitzahl TEXT NOT NULL,
-Straﬂe TEXT NOT NULL,
+Stra√üe TEXT NOT NULL,
 Ort TEXT NOT NULL
 );
