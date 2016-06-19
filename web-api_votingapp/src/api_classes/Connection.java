@@ -1,15 +1,14 @@
 //Anleitung/ Quelle: http://openbook.rheinwerk-verlag.de/java7/1507_13_003.html#top
-package data_classes;
+package api_classes;
 
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.sql.Statement;
 
 import javax.jws.*;
 import javax.jws.soap.SOAPBinding;
 import javax.xml.ws.Endpoint;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
 
 /*
@@ -24,7 +23,7 @@ import java.sql.SQLException;
  * @WebResult kennzeichnen, weider legt das Feld name (in Klammern) den Namen des
  * Ergenisses in der Api fest.
  */
-@WebService(name="ConnectionService", endpointInterface="data_classes.Connection")
+@WebService(name="ConnectionService", endpointInterface="api_classes.Connection")
 @SOAPBinding(style= SOAPBinding.Style.RPC)
 public class Connection implements ConnectionInt{
 	
@@ -32,10 +31,12 @@ public class Connection implements ConnectionInt{
 	 * übergeben, wird sie auf "http://localhost:8080/services"
 	 * festgelegt.
 	 */
-	public Connection(){this("http://localhost:8080/services");}
+	public Connection(){
+		this("http://localhost:8080/services");
+		databaseConnection();
+	}
 	public Connection(String gweburl){
 		weburl=gweburl;
-		
 	}
 	
 	private String weburl;
@@ -44,8 +45,8 @@ public class Connection implements ConnectionInt{
 	//Datenbank-Verbindungsvariablen
 	private String hostname = "localhost";
 	private String port = "3306";
-	private String dbname = "uni"; //Name der Datenbank!
-	private Connection conState = null; //Wird in databaseConnection initialisiert
+	private String dbname = "votingapp"; //Name der Datenbank!
+	private java.sql.Connection con; //Wird in databaseConnection initialisiert
 	
 	public void databaseConnection(){
 		String url = "jdbc:mysql://"+hostname+":"+port+"/"+dbname ;
@@ -58,7 +59,7 @@ public class Connection implements ConnectionInt{
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-			conState = (Connection) DriverManager.getConnection(url, user, password);
+			con = DriverManager.getConnection(url, user, password);
 			System.out.println("Connected");
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -81,18 +82,29 @@ public class Connection implements ConnectionInt{
 	//Nicht Vergessen die Parameter der Methode mit @WebParam zu versehen & name setzen!!
 	//(operationName="requestData")
 	@Override
-	public ArrayList<String> requestData(String statement)
-	{
-		//Aufruf der DB Klasse
-		return null;
+	public ResultSet requestData(String ustmt){
+		ResultSet rs = null;
+		try{
+			Statement stmt = con.createStatement();
+			rs = stmt.executeQuery(ustmt);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return rs;
 	}
 	
 	//Es Fehlen noch die Parameter (XML datei und was er überschreiben will)
 	//Nicht Vergessen die Parameter der Methode mit @WebParam zu versehen & name setzen!!
 	@Override
-	public boolean writeData(String statement)
+	public boolean writeData(String ustmt)
 	{
-		
-		return false;
+		try{
+			Statement stmt = con.createStatement();
+			stmt.execute(ustmt);
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 }

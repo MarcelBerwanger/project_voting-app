@@ -1,11 +1,15 @@
-package web_api_bewertungsapp;
+package test_classes;
 
 import java.net.URL;
-import data_classes.Connection;
-import data_classes.ConnectionInt;
+
+import database_classes.Tab_person;
+
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import javax.xml.ws.WebServiceRef;
+
+import api_classes.Connection;
+import api_classes.ConnectionInt;
 
 public class Main {
 	
@@ -15,6 +19,7 @@ public class Main {
 	private static QName qname;
 	
 	public static void main(String[] args){
+		/**
 		//Zuerst den Server Starten
 		Connection con = new Connection();
 		con.runService();
@@ -26,21 +31,25 @@ public class Main {
 		}catch(Exception e){System.out.println("Fehler mit der URL");}
 		
 		//Der QName wird zum erstellen eines Services benötigt
-		qname = new QName("http://data_classes/","ConnectionService");
+		qname = new QName("http://api_classes/","ConnectionService");
 		try{
 			connTest();
 		}catch(Exception e){
 			e.printStackTrace();
 			con.stopService();
-		}
+		}**/
+		
+		System.out.println("Delete? - " +Tab_person.deletePerson("ben"));
+		System.out.println("Gefunden? - "+Tab_person.check_logIn("ben", "1234"));
+		System.out.println("Erstellt? - "+Tab_person.savePerson("ben", "ben@ben", "1AHW", "1234", "u"));
+		System.out.println("Gefunden? - "+Tab_person.check_logIn("ben", "1234"));
 	}
 	
 	/**
-	 * Client Join auf die API und Aufruf einer Methode
+	 * Client joint auf die API und Aufruf einer Methode
 	 */
 	public static void connTest(){
 		Service service = Service.create(url, qname);
 		ConnectionInt con = service.getPort(ConnectionInt.class);
-		System.out.println(con.requestData());
 	}
 }

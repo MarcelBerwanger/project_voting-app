@@ -1,0 +1,2 @@
+INSERT INTO person (pid, email, klasse, passwort, rolle)
+VALUES("ben", "ben@ben.com", "ben", "1234", "u");

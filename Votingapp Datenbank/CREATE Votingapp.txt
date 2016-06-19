@@ -1,87 +1,53 @@
-DROP DATABASE IF EXISTS votingapp;
+﻿DROP DATABASE IF EXISTS votingapp;
 
 CREATE DATABASE IF NOT EXISTS votingapp;
 USE votingapp;
 
-CREATE TABLE Rolle(
-Rolle CHAR NOT NULL DEFAULT 'U',
-KEY(Rolle)
-);
-
-INSERT INTO Rolle (Rolle) VALUES ('U');
-INSERT INTO Rolle (Rolle) VALUES ('M');
-
 CREATE TABLE Kategorie(
-KID INT PRIMARY KEY NOT NULL,
-Bezeichnung TEXT NOT NULL,
-KEY(KID)
+Bezeichnung VARCHAR(255) NOT NULL,
+KEY(Bezeichnung)
 );
 
-INSERT INTO Kategorie (KID, Bezeichnung) VALUES (1,'gut bürgerlich');
-INSERT INTO Kategorie (KID, Bezeichnung) VALUES (2,'asiatisch');
-INSERT INTO Kategorie (KID, Bezeichnung) VALUES (3,'italienisch');
-INSERT INTO Kategorie (KID, Bezeichnung) VALUES (4,'griechisch');
-INSERT INTO Kategorie (KID, Bezeichnung) VALUES (5,'fast food');
+INSERT INTO Kategorie (Bezeichnung) VALUES ('gut bürgerlich');
+INSERT INTO Kategorie (Bezeichnung) VALUES ('asiatisch');
+INSERT INTO Kategorie (Bezeichnung) VALUES ('italienisch');
+INSERT INTO Kategorie (Bezeichnung) VALUES ('griechisch');
+INSERT INTO Kategorie (Bezeichnung) VALUES ('fast food');
 
 CREATE TABLE Person(
-PID INT PRIMARY KEY NOT NULL,
-Benutzername TEXT NOT NULL,
-Klasse TEXT NOT NULL,
+PID VARCHAR(255) PRIMARY KEY NOT NULL,
+Email TEXT NOT NULL,
+Klasse ENUM('1HW','2HW','3HW','4HW','5HW'),
 Passwort TEXT NOT NULL,
-Rolle CHAR NOT NULL,
-FOREIGN KEY (Rolle) REFERENCES Rolle (Rolle),
+Rolle ENUM('m','u') NOT NULL DEFAULT 'U',
 KEY(PID)
 );
 
 CREATE TABLE Freund(
-PID INT NOT NULL,
-FID INT PRIMARY KEY NOT NULL,
+PID VARCHAR(255) NOT NULL,
+FID VARCHAR(255) PRIMARY KEY NOT NULL,
 FOREIGN KEY(PID) REFERENCES Person(PID)
 );
 
 CREATE TABLE Restaurant(
-RID INT PRIMARY KEY NOT NULL,
-KID INT NOT NULL, 
-Name TEXT NOT NULL,
+RID VARCHAR(255) PRIMARY KEY NOT NULL,
 Kategorie TEXT NOT NULL,
-FOREIGN KEY (KID) REFERENCES Kategorie(KID),
+Adresse TEXT NOT NULL,
 KEY(RID)
 );
 
 CREATE TABLE Bewertung(
-PID INT NOT NULL,
-RID INT NOT NULL,
-Sterne REAL NOT NULL,
+PID VARCHAR(255) NOT NULL,
+RID VARCHAR(255) NOT NULL,
+Sterne INT NOT NULL,
 Beschreibung Text NOT NULL,
 FOREIGN KEY(PID) REFERENCES Person(PID),
 FOREIGN KEY(RID) REFERENCES Restaurant(RID)
 );
 
-CREATE TABLE Klasse(
-Name TEXT NOT NULL
-);
-
-INSERT INTO Klasse (Name) VALUES ('1AHW');
-INSERT INTO Klasse (Name) VALUES ('1BHW');
-INSERT INTO Klasse (Name) VALUES ('2AHW');
-INSERT INTO Klasse (Name) VALUES ('2BHW');
-INSERT INTO Klasse (Name) VALUES ('3AHW');
-INSERT INTO Klasse (Name) VALUES ('3BHW');
-INSERT INTO Klasse (Name) VALUES ('4AHW');
-INSERT INTO Klasse (Name) VALUES ('4BHW');
-INSERT INTO Klasse (Name) VALUES ('5AHW');
-INSERT INTO Klasse (Name) VALUES ('5BHW');
-
 CREATE TABLE Voting(
-PID INT NOT NULL,
-RID INT NOT NULL,
+PID VARCHAR(255) NOT NULL,
+RID VARCHAR(255) NOT NULL,
 FOREIGN KEY(PID) REFERENCES Person(PID),
 FOREIGN KEY(RID) REFERENCES Restaurant(RID)
-);
-
-CREATE TABLE Adresse(
-RID INT NOT NULL,
-Postleitzahl TEXT NOT NULL,
-Straße TEXT NOT NULL,
-Ort TEXT NOT NULL
 );
