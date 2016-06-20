@@ -1,2 +1,10 @@
-INSERT INTO person (pid, email, klasse, passwort, rolle)
+INSERT INTO Person (pid, email, klasse, passwort, rolle)
 VALUES("ben", "ben@ben.com", "ben", "1234", "u");
+INSERT INTO Restaurant (rid, kategorie, adresse)
+VLAUES(1, "asiatisch", "Anichstraße 12");
+INSERT INTO Bewertung (pid, rid, sterne, beschreibung)
+VALUES(1, 2, 5, "gut");
+INSERT INTO Voting (pid, rid)
+VALUES(1,1);
+INSERT INTO Freund (pid, fid)
+VALUES (1,2)
