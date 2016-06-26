@@ -1,24 +1,61 @@
 package database_classes;
 
+import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import api_classes.Connection;
+import java.util.Arrays;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.ws.Service;
+
+import api_classes.Connection;
+import api_classes.ConnectionInt;
+
+@XmlType(factoryMethod="newInstance")
+@XmlRootElement
 public class Tab_restaurant {
-	
-	private Tab_restaurant(String urid, String ukate, String uadd){
+	public Tab_restaurant(String urid, String ukate, String uadd){
+		//Datenbankfelder
 		rid = urid;
 		kategorie = ukate;
 		adresse = uadd;
 		allRestaurants.add(this);
 	}
+	//Implementierung nur für JAX-WS, nicht in anderen Codes verwenden-> liefert
+	//keine gültigen Objekte
+	private Tab_restaurant(){}
+	public static Tab_restaurant newInstance(){
+		return new Tab_restaurant();
+	}
 	
+	//Datenbank Felder
+	@XmlElement
 	private String rid;
+	@XmlElement
 	private String kategorie;
+	@XmlElement
 	private String adresse;
+	
 	//ArrayList in der alle Restaurants stehen
-	private static ArrayList<Tab_restaurant> allRestaurants;
+	public static ArrayList<Tab_restaurant> allRestaurants = new ArrayList<Tab_restaurant>();
+	
+	//Felder der Connection
+	private static URL url = establish_con();
+	private static Service service;
+	private static ConnectionInt con;
+	
+	private static URL establish_con(){
+		//Initialisierung der Connection
+		try{
+			url = new URL(Connection_var.url);
+			service = Service.create(url ,Connection_var.qname);
+			con = service.getPort(ConnectionInt.class);
+		}catch(Exception e){e.printStackTrace();}
+		return url;
+	}
 	
 	/**
 	 * Diese Methode liefert die aktuellen Votes für das aktuelle Restaurant
@@ -45,26 +82,7 @@ public class Tab_restaurant {
 	 * @return Die Methode returnt false wenn das Restaurant schon existiert.
 	 */
 	public static boolean save_restaurant(String urid, String uadresse, String ukategorie){
-		//Return als bool, ob dieses Restaurant schon
-		//existiert (false = existiert)
-		String stmt = "SELECT * FROM restaurant WHERE rid='"+urid+"'";
-		
-		//Ersetzten durch API-Aufruf!!!
-		Connection con = new Connection();
-		ResultSet rs = con.requestData(stmt);
-		//Wenn das Restaurant vorhanden ist, dann abbruch der Methode
-		//Probieren, ob das Abfrage-Ergebnis leer ist; return false = vorhanden
-		try{
-			rs.next();
-			rs.getString("rid");
-			//Wenn etwas gefunden wird dann abbruch, weil es schon gibt!!
-			return false;
-		}catch(Exception e){}
-		
-		//Restaurant in die Datenbank einfügen
-		stmt = "INSERT INTO restaurant (rid, kategorie, adresse) ";
-		stmt += "VALUES('"+urid+"','"+ukategorie+"','"+uadresse+"')";
-		return con.writeData(stmt);
+		return con.save_restaurant(urid, uadresse, ukategorie);
 	}
 	
 	/**
@@ -75,46 +93,14 @@ public class Tab_restaurant {
 	 * @return Boolean Wert, ob die Operation erfolgreich war (true=success)
 	 */
 	public static boolean deleteRestaurant(String uname, String ukategorie){
-		//Return als bool, ob dieses Restaurant schon
-		//existiert, damit es gelöscht werden kann (false = existiert nicht)
-		String stmt = "SELECT * FROM restaurant WHERE rid='"+uname+"' AND kategorie='"+ukategorie+"'";
-		
-		//Ersetzten durch API-Aufruf!!!
-		Connection con = new Connection();
-		ResultSet rs = con.requestData(stmt);
-		
-		//Wenn das Restaurant nicht vorhanden ist, dann abbruch der Methode
-		try{
-			rs.next();
-			rs.getString("rid");
-		}catch(Exception e){return false;}
-		
-		//Eigentliches löschen, nach der obigen "Überprüfung".Returnt "true", wenn erfolgrich
-		stmt = "DELETE FROM restaurant WHERE rid='"+uname+"' AND kategorie="+ukategorie+"'";
-		return con.writeData(stmt);
+		return con.deleteRestaurant(uname, ukategorie);
 	}
+	
 	/**
 	 * Alle Restaurants aus der Datenbank holen und in die ArrayList schreiben
 	 * Die ArrayList heißt allRestaurants und ist static
 	 */
 	public static ArrayList<Tab_restaurant> getAllRestaurants(){
-		//Zuerst ArrayList clearen, damit keine doppelten vorkommen
-		allRestaurants.clear();
-		
-		//Statement erzeugen & loschchicken
-		String stmt = "SELECT * FROM restaurant";
-		Connection con = new Connection();
-		ResultSet rs = con.requestData(stmt);
-		
-		//Alle abgefragten Restaurants in die ArrayList eintragen
-		try{
-			while(rs.next()){
-				String rid =rs.getString("RID");
-				String kat = rs.getString("Kategorie");
-				String add = rs.getString("Adresse");
-				allRestaurants.add(new Tab_restaurant(rid, kat, add));
-			}
-		}catch(SQLException e){return null;}
-		return allRestaurants;
+		return new ArrayList<Tab_restaurant>(Arrays.asList(con.getAllRestaurants()));
 	}
 }

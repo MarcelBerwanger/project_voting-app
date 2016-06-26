@@ -1,28 +1,68 @@
 package database_classes;
 
+import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import javax.sql.rowset.WebRowSet;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.ws.Service;
 
 import api_classes.Connection;
+import api_classes.ConnectionInt;
 
+
+@XmlType(factoryMethod="newInstance")
+@XmlRootElement
 public class Tab_person {
-	
 	public Tab_person(String upid, String umail, String uklasse, String upass, String urole){
+		//Datenbankfelder
 		pid = upid;
 		email = umail;
 		klasse = uklasse;
 		passwort = upass;
 		rolle = urole;
 	}
+	//Implementierung nur für JAX-WS, nicht in anderen Codes verwenden-> liefert
+	//keine gültigen Objekte
+	private Tab_person(){}
+	public static Tab_person newInstance(){
+		return new Tab_person();
+	}
+	//Static Array, welches zur temporären Speicherung verwendet wird
+	public static ArrayList<Tab_person> allPersonen = new ArrayList<Tab_person>();
 	
+	//Datenbank Felder
+	@XmlElement
 	private String pid;
+	@XmlElement
 	private String email;
+	@XmlElement
 	private String klasse;
+	@XmlElement
 	private String passwort;
+	@XmlElement
 	private String rolle;
 	
-	public static ArrayList<Tab_person> allPersonen;
+	//Felder der Connection
+	private static URL url = establish_con();
+	private static Service service;
+	private static ConnectionInt con;
+	
+	private static URL establish_con(){
+		//Initialisierung der Connection
+		try{
+			url = new URL(Connection_var.url);
+			service = Service.create(url ,Connection_var.qname);
+			con = service.getPort(ConnectionInt.class);
+		}catch(Exception e){e.printStackTrace();}
+		return url;
+	}
+	
 	
 	/**
 	 * Diese Methode liefert alle Freunde einer Person
@@ -47,25 +87,7 @@ public class Tab_person {
 	 * Arbeitsweise: Statement -> fertiger String wird an die API geschickt
 	 */
 	public static boolean savePerson(String uname, String uemail, String uklasse, String upasswort, String urolle){
-		//Return als bool, ob dieser Benutzer schon
-		//existiert (false = existiert)
-		String stmt = "SELECT pid FROM person WHERE pid='"+uname+"'";
-		
-		//Ersetzten durch API-Aufruf!!!
-		Connection con = new Connection();
-		ResultSet rs = con.requestData(stmt);
-		//Probieren, ob das Abfrage-Ergebnis leer ist; return false wenn leer, sonst true
-		try{
-			rs.next();
-			rs.getString("pid");
-			//Wenn etwas gefunden wird dann abbruch, weil es schon gibt!!
-			return false;
-		}catch(Exception e){}
-		
-		//Restaurant in die Datenbank einfügen
-		stmt = "INSERT INTO person (pid, email, klasse, passwort, rolle) ";
-		stmt += "VALUES('"+uname+"','"+uemail+"','"+uklasse+"','"+upasswort+"','"+urolle+"')";
-		return con.writeData(stmt);
+		return con.savePerson(uname, uemail, uklasse, upasswort, urolle);
 	}
 	
 	/**
@@ -74,45 +96,16 @@ public class Tab_person {
 	 * @return Boolean, der eine Rückmeldung gibt, ob es funktioniert hat (true = success)
 	 */
 	public static boolean deletePerson(String upid){
-		//Return als bool, ob dieses Restaurant schon
-		//existiert, damit es gelöscht werden kann (false = existiert nicht)
-		String stmt = "SELECT * FROM person WHERE pid='"+upid+"'";
-		
-		//Ersetzten durch API-Aufruf!!!
-		Connection con = new Connection();
-		ResultSet rs = con.requestData(stmt);
-		//Wenn die Person nicht vorhanden ist, dann abbruch der Methode
-		try{
-			rs.next();
-			rs.getString("pid");
-		}catch(Exception e){return false;}
-		
-		//Eigentliches löschen, nach der obigen "Überprüfung".Returnt "true", wenn erfolgrich
-		stmt = "DELETE FROM person WHERE pid='"+upid+"'";
-		return con.writeData(stmt);
+		return con.deletePerson(upid);
 	}
 	
+	/**
+	 * Diese Methode liefert eine ArrayList mit allen verfügbaren Personen in der Datenbank 
+	 * @return ArrayList vom Typ Tab_person mit allen Personen
+	 */
 	public static ArrayList<Tab_person> getAllPersons(){
-		//Zuerst ArrayList clearen, damit keine doppelten vorkommen
-		allPersonen.clear();
-		
-		//Statement erzeugen & loschchicken
-		String stmt = "SELECT * FROM person";
-		Connection con = new Connection();
-		ResultSet rs = con.requestData(stmt);
-		
-		//Alle abgefragten Restaurants in die ArrayList eintragen
-		try{
-			while(rs.next()){
-				String pid =rs.getString("PID");
-				String mail = rs.getString("Email");
-				String klass = rs.getString("Klasse");
-				String pass = rs.getString("Passwort");
-				String role = rs.getString("Rolle");
-				allPersonen.add(new Tab_person(pid, mail, klass, pass, role));
-			}
-		}catch(SQLException e){return null;}
-		return allPersonen;
+		ArrayList<Tab_person> as = new ArrayList<Tab_person>(Arrays.asList(con.getAllPersons()));
+		return as;
 	}
 	
 	/**
@@ -121,16 +114,6 @@ public class Tab_person {
 	 * gibt es retrun true, wenn nicht dann return false
 	 */
 	public static boolean check_logIn(String ubenutzer, String upasswort){
-		String stmt = "SELECT pid FROM Person WHERE pid='"+ubenutzer+"'AND passwort="+upasswort;
-		//Ersetzten durch API-Aufruf!!!
-		Connection con = new Connection();
-		ResultSet rs = con.requestData(stmt);
-		
-		//Probieren, ob das Abfrage-Ergebnis leer ist; return false wenn leer, sonst true
-		try{
-			rs.next();
-			rs.getString("pid");
-		}catch(Exception e){return false;}
-		return true;
+		return con.check_logIn(ubenutzer, upasswort);
 	}
 }

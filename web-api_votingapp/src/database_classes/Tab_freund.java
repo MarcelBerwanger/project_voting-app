@@ -1,24 +1,57 @@
 package database_classes;
 
+import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.ws.Service;
 
 import api_classes.Connection;
+import api_classes.ConnectionInt;
 
+@XmlType(factoryMethod="newInstance")
+@XmlRootElement
 public class Tab_freund {
 	
 	public Tab_freund(String upid, String ufid){
 		fid = ufid;
 		pid = upid;
 	}
+	//Implementierung nur für JAX-WS, nicht in anderen Codes verwenden-> liefert
+	//keine gültigen Objekte
+	private Tab_freund(){}
+	public static Tab_freund newInstance(){
+		return new Tab_freund();
+	}
 	
+	@XmlElement
 	private String fid;
+	@XmlElement
 	private String pid;
 	//ACHTUNG:
 	//Diese ArrayList nicht verwenden, sie beinhaltet keine Konsistenten Daten;
 	//dient nur der Temporären speicherung
-	private static ArrayList<Tab_freund> allFriends;
+	public static ArrayList<Tab_freund> allFriends = new ArrayList<Tab_freund>();
+	
+	//Felder der Connection
+	private static URL url = establish_con();
+	private static Service service;
+	private static ConnectionInt con;
+	
+	private static URL establish_con(){
+		//Initialisierung der Connection
+		try{
+			url = new URL(Connection_var.url);
+			service = Service.create(url ,Connection_var.qname);
+			con = service.getPort(ConnectionInt.class);
+		}catch(Exception e){e.printStackTrace();}
+		return url;
+	}
 	
 	/**
 	 * Diese Methode speichert eine Freundschaft einer Person
@@ -27,26 +60,7 @@ public class Tab_freund {
 	 * @return bool wert ob die speicherung erfolgreich verlaufen ist; true = erfolgreich
 	 */
 	public static boolean saveFreund(String upid, String ufid){
-		//Return als bool, ob diese Freundschaft schon
-		//existiert (false = existiert)
-		String stmt = "SELECT pid, fid FROM freund WHERE pid='"+upid+"' AND fid='"+ufid+"'";
-		
-		//Ersetzten durch API-Aufruf!!!
-		Connection con = new Connection();
-		ResultSet rs = con.requestData(stmt);
-		
-		//Probieren, ob das Abfrage-Ergebnis leer ist; return false vorhanden
-		try{
-			rs.next();
-			rs.getString("pid");
-			//Wenn etwas gefunden wird dann abbruch, weil es schon gibt!!
-			return false;
-		}catch(Exception e){}
-		
-		//Restaurant in die Datenbank einfügen
-		stmt = "INSERT INTO freund (pid, fid) ";
-		stmt += "VALUES('"+upid+"','"+ufid+"')";
-		return con.writeData(stmt);
+		return con.saveFreund(upid, ufid);
 	}
 	
 	/**
@@ -56,23 +70,7 @@ public class Tab_freund {
 	 * @return Bool-Wert; true= erfolgreich gelöscht & false = Fehler/ nicht vorhanden
 	 */
 	public static boolean deleteFreund(String upid, String ufid){
-		//Return als bool, ob dieses Restaurant schon
-		//existiert, damit es gelöscht werden kann (false = existiert nicht)
-		String stmt = "SELECT * FROM freund WHERE pid='"+upid+"' AND fid='"+ufid+"'";
-		
-		//Ersetzten durch API-Aufruf!!!
-		Connection con = new Connection();
-		ResultSet rs = con.requestData(stmt);
-		
-		//Wenn die Freundschaft nicht vorhanden ist, dann abbruch der Methode
-		try{
-			rs.next();
-			rs.getString("pid");
-		}catch(Exception e){return false;}
-		
-		//Eigentliches löschen, nach der obigen "Überprüfung".Returnt "true", wenn erfolgrich
-		stmt = "DELETE FROM freund WHERE pid='"+upid+"' AND fid="+ufid+"'";
-		return con.writeData(stmt);
+		return con.deleteFreund(upid, ufid);
 	}
 	
 	/**
@@ -81,23 +79,6 @@ public class Tab_freund {
 	 * @return Gibt die ArrayList von Freunden einer Person zurück; liefert null, wenn keine Freunde vorhanden
 	 */
 	public static ArrayList<Tab_freund> getAllFreunde(String upid){		
-		//ArrayList clearen, damit Daten stimmen
-		allFriends.clear();
-		
-		//Statement erzeugen & loschchicken
-		String stmt = "SELECT * FROM freunde WHERE pid='"+upid+"'";
-		
-		Connection con = new Connection();
-		ResultSet rs = con.requestData(stmt);
-		
-		//Alle abgefragten Freundschaften in die ArrayList eintragen
-		try{
-			while(rs.next()){
-				String pid =rs.getString("pid");
-				String fid = rs.getString("fid");
-				allFriends.add(new Tab_freund(pid, fid));
-			}
-		}catch(SQLException e){return null;}
-		return allFriends;
+		return new ArrayList<Tab_freund>(Arrays.asList(con.getAllFreunde(upid)));
 	}
 }
